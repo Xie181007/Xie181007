@@ -1,67 +1,73 @@
 {
   "$schema": "./profile.schema.json",
   "profile": {
-    "name": "Your Name",
-    "username": "yourusername",
-    "headline": "AI Engineer & Product Builder",
-    "affiliation": "Your University or Company",
-    "location": "City, Country",
-    "status": "Learning / Building / Shipping",
+    "name": "M. Rizki Irawan",
+    "username": "xiu181007",
+    "headline": "Fullstack Web Dev & Penetration Tester",
+    "affiliation": "SMKN 2 Probolinggo",
+    "location": "Probolinggo, Jawa Timur",
+    "status": "Junior Dev & Penetration Testing",
     "about": [
-      "I build practical systems at the intersection of artificial intelligence, software engineering, and products people can trust.",
-      "My work combines technical exploration with a builder mindset: understand the problem, test the system, and share what actually works."
+      "I am a Fullstack Web Developer and Junior Penetration Tester studying at SMKN 2 Probolinggo.",
+      "I build secure, responsive web applications while exploring cybersecurity, ethical hacking, and vulnerability assessment."
     ]
   },
   "research": {
-    "primary": "AI Agents",
-    "direction": "Reliable autonomous systems",
-    "themes": "Tool use / evaluation / human control",
-    "narrative": "I am interested in systems that can observe state, use tools, evaluate outcomes, and take bounded actions with clear evidence and human oversight."
+    "primary": "Web & Security",
+    "direction": "Fullstack & Penetration Testing",
+    "themes": "Web Dev / Pentesting / Security Audit",
+    "narrative": "I am passionate about building modern web applications with robust architecture while analyzing system vulnerabilities to ensure secure software deployment."
   },
   "focus": [
     {
-      "name": "AI Agents",
-      "description": "Autonomous workflows, tool use, evaluation, and reliable agent behavior."
+      "name": "Fullstack Web",
+      "description": "Building responsive frontends and reliable backend API services."
     },
     {
-      "name": "Applied AI",
-      "description": "Turning model capabilities into useful and testable software systems."
+      "name": "Penetration Testing",
+      "description": "Identifying web vulnerabilities and testing system security posture."
     },
     {
-      "name": "Developer Tools",
-      "description": "Better workflows for building, testing, and operating modern software."
+      "name": "Web Security",
+      "description": "Implementing secure authentication, input sanitization, and code auditing."
     }
   ],
   "projects": [
     {
-      "name": "Project One",
-      "url": "https://github.com/yourusername/project-one",
+      "name": "Web Security Lab",
+      "url": "https://github.com/xiu181007/web-security-lab",
       "homepage": "",
-      "focus": "Primary project focus",
-      "summary": "A concise explanation of what the project does and why it matters.",
-      "heroLabel": "Primary build"
+      "focus": "Vulnerability Assessment",
+      "summary": "Tools and scripts for scanning web application security and testing defenses.",
+      "heroLabel": "Security testing"
     },
     {
-      "name": "Project Two",
-      "url": "https://github.com/yourusername/project-two",
+      "name": "Fullstack Project",
+      "url": "https://github.com/xiu181007/fullstack-project",
       "homepage": "",
-      "focus": "Secondary project focus",
-      "summary": "A second project that supports the professional direction of this profile.",
-      "heroLabel": "Active system"
+      "focus": "Modern Web Development",
+      "summary": "A fullstack web application built with responsive UI and secure REST APIs.",
+      "heroLabel": "Fullstack web"
     }
   ],
   "techStack": [
+    "JavaScript",
     "TypeScript",
-    "Next.js",
+    "Node.js",
+    "PHP",
+    "Laravel",
     "Python",
+    "Linux",
+    "Burp Suite",
+    "Nmap",
     "PostgreSQL",
-    "Playwright"
+    "Git"
   ],
   "links": [
     {
       "label": "GitHub",
-      "value": "yourusername",
-      "url": "https://github.com/yourusername",
+      "value": "xiu181007",
+      "url": "https://github.com/xiu181007",
       "logo": "github",
       "color": "0B1220"
     }
@@ -73,5 +79,5 @@
   "appearance": {
     "palette": "signal"
   },
-  "footer": "Building thoughtful systems and sharing what works."
+  "footer": "Building secure fullstack applications and exploring cybersecurity."
 }
