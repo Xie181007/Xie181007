@@ -158,6 +158,8 @@ function createAsciiTspans({ pixels, width, height }, placement) {
 function buildSystemLayer(profileLines, { x, y, width, lineHeight, fontSize }, colors) {
   const clips = [];
   const rows = [];
+  const mono = "'Courier New', Consolas, monospace";
+  const fontAttrs = `font-family="${mono}"`;
 
   profileLines.forEach((line, index) => {
     if (line.type === "blank") return;
@@ -168,14 +170,14 @@ function buildSystemLayer(profileLines, { x, y, width, lineHeight, fontSize }, c
     clips.push(`<clipPath id="${id}"><rect x="${x - 3}" y="${(lineY - fontSize - 2).toFixed(2)}" width="0" height="${fontSize + 8}"><animate attributeName="width" from="0" to="${width}" dur="0.36s" begin="${begin}s" fill="freeze"/></rect></clipPath>`);
 
     if (line.type === "header") {
-      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" class="system-head"><tspan fill="${colors.violet}">${escapeXml(line.value)}</tspan><tspan fill="${colors.muted}"> ------------------------------------------</tspan></text></g>`);
+      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" xml:space="preserve" ${fontAttrs} font-size="${fontSize + 2}" font-weight="700"><tspan fill="${colors.violet}">${escapeXml(line.value)}</tspan><tspan fill="${colors.muted}"> ------------------------------------------</tspan></text></g>`);
     } else if (line.type === "section") {
-      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" class="system-section" fill="${colors.green}">- ${escapeXml(line.value)} -----------------------------------</text></g>`);
+      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" xml:space="preserve" ${fontAttrs} font-size="${fontSize}" font-weight="700" fill="${colors.green}">- ${escapeXml(line.value)} -----------------------------------</text></g>`);
     } else if (line.type === "footer") {
-      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" class="system-footer" fill="${colors.blue}">${escapeXml(line.value)}</text></g>`);
+      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" xml:space="preserve" ${fontAttrs} font-size="${fontSize}" fill="${colors.blue}">${escapeXml(line.value)}</text></g>`);
     } else {
       const dots = ".".repeat(Math.max(3, 14 - line.key.length));
-      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" class="system-row"><tspan fill="${colors.muted}">. </tspan><tspan class="system-key" fill="${colors.cyan}">${escapeXml(line.key)}</tspan><tspan fill="${colors.muted}">: ${dots} </tspan><tspan fill="${colors.primary}">${escapeXml(line.value)}</tspan></text></g>`);
+      rows.push(`<g clip-path="url(#${id})"><text x="${x}" y="${lineY}" xml:space="preserve" ${fontAttrs} font-size="${fontSize}"><tspan fill="${colors.muted}">. </tspan><tspan fill="${colors.cyan}" font-weight="700">${escapeXml(line.key)}</tspan><tspan fill="${colors.muted}">: ${dots} </tspan><tspan fill="${colors.primary}">${escapeXml(line.value)}</tspan></text></g>`);
     }
   });
 
@@ -237,33 +239,22 @@ function createHeroSvg(config, colors, size, portrait) {
   <clipPath id="portrait-clip"><rect x="${clip.x}" y="${clip.y}" width="${clip.width}" height="${clip.height}" rx="${clip.radius}"/></clipPath>
   <mask id="portrait-reveal"><rect x="${clip.x}" y="${clip.y}" width="${clip.width}" height="0" rx="${clip.radius}" fill="white"><animate attributeName="height" from="0" to="${clip.height}" dur="2.1s" begin="0.12s" fill="freeze"/></rect></mask>
   ${system.clips}
-  <style>
-    .mono { font-family: 'Courier New', Consolas, monospace; }
-    .ascii { font-family: 'Courier New', Consolas, monospace; font-size: ${layout.portrait.fontSize}px; letter-spacing: -0.15px; fill: url(#ascii-signal); }
-    .panel-title { font-family: 'Courier New', Consolas, monospace; font-size: ${isDesktop ? 11 : 12}px; letter-spacing: 2px; fill: ${colors.blue}; opacity: 0.78; }
-    .terminal-label { font-family: 'Courier New', Consolas, monospace; font-size: ${isDesktop ? 12 : 11}px; letter-spacing: 0.5px; fill: ${colors.muted}; }
-    .live-label { font-family: 'Courier New', Consolas, monospace; font-size: 10px; letter-spacing: 1px; fill: ${colors.red}; }
-    .system-head { font-family: 'Courier New', Consolas, monospace; font-size: ${layout.system.fontSize + 2}px; font-weight: 700; }
-    .system-section, .system-footer, .system-row { font-family: 'Courier New', Consolas, monospace; font-size: ${layout.system.fontSize}px; }
-    .system-section, .system-key { font-weight: 700; }
-    text, tspan { white-space: pre; }
-  </style>
 </defs>
 <rect width="${layout.width}" height="${layout.height}" rx="${layout.outerRadius}" fill="url(#background)"/>
 <rect width="${layout.width}" height="${layout.height}" rx="${layout.outerRadius}" fill="url(#scanlines)"/>
 <rect x="${titlebar.x}" y="${titlebar.y}" width="${titlebar.width}" height="${titlebar.height}" rx="${titlebar.radius}" fill="${colors.panel}" fill-opacity="0.84"/>
 <circle cx="${titlebar.x + 21}" cy="${titlebar.y + titlebar.height / 2}" r="5" fill="#EF4444"/><circle cx="${titlebar.x + 39}" cy="${titlebar.y + titlebar.height / 2}" r="5" fill="#F59E0B"/><circle cx="${titlebar.x + 57}" cy="${titlebar.y + titlebar.height / 2}" r="5" fill="${colors.green}"/>
-<text x="${titleCenter}" y="${titlebar.y + titlebar.height / 2 + 5}" text-anchor="middle" class="terminal-label">${escapeXml(terminalUser)}@profile ~ % ./profile --live</text>
-${isDesktop ? `<circle cx="${liveX}" cy="${titlebar.y + titlebar.height / 2}" r="4" fill="${colors.red}"><animate attributeName="opacity" values="1;0.15;1" dur="1.1s" repeatCount="indefinite"/></circle><text x="${liveX + 10}" y="${titlebar.y + titlebar.height / 2 + 4}" class="live-label">SCANNING</text>` : ""}
+<text x="${titleCenter}" y="${titlebar.y + titlebar.height / 2 + 5}" text-anchor="middle" xml:space="preserve" font-family="'Courier New', Consolas, monospace" font-size="${isDesktop ? 12 : 11}" letter-spacing="0.5" fill="${colors.muted}">${escapeXml(terminalUser)}@profile ~ % ./profile --live</text>
+${isDesktop ? `<circle cx="${liveX}" cy="${titlebar.y + titlebar.height / 2}" r="4" fill="${colors.red}"><animate attributeName="opacity" values="1;0.15;1" dur="1.1s" repeatCount="indefinite"/></circle><text x="${liveX + 10}" y="${titlebar.y + titlebar.height / 2 + 4}" xml:space="preserve" font-family="'Courier New', Consolas, monospace" font-size="10" letter-spacing="1" fill="${colors.red}">SCANNING</text>` : ""}
 <rect x="${visual.x}" y="${visual.y}" width="${visual.width}" height="${visual.height}" rx="${visual.radius}" fill="${colors.panel}" fill-opacity="0.38" stroke="url(#border)" stroke-opacity="0.42"/>
 <rect x="${info.x}" y="${info.y}" width="${info.width}" height="${info.height}" rx="${info.radius}" fill="${colors.panel}" fill-opacity="0.42" stroke="url(#border)" stroke-opacity="0.42"/>
-<text x="${layout.visualTitle.x}" y="${layout.visualTitle.y}" class="panel-title">VISUAL.MAP / PORTRAIT.SIGNAL</text>
-<text x="${layout.infoTitle.x}" y="${layout.infoTitle.y}" class="panel-title">SYSTEM.INFO / RESEARCH.BUILDER</text>
+<text x="${layout.visualTitle.x}" y="${layout.visualTitle.y}" xml:space="preserve" font-family="'Courier New', Consolas, monospace" font-size="${isDesktop ? 11 : 12}" letter-spacing="2" fill="${colors.blue}" opacity="0.78">VISUAL.MAP / PORTRAIT.SIGNAL</text>
+<text x="${layout.infoTitle.x}" y="${layout.infoTitle.y}" xml:space="preserve" font-family="'Courier New', Consolas, monospace" font-size="${isDesktop ? 11 : 12}" letter-spacing="2" fill="${colors.blue}" opacity="0.78">SYSTEM.INFO / RESEARCH.BUILDER</text>
 ${ambientPortrait}
-<g clip-path="url(#portrait-clip)" mask="url(#portrait-reveal)"><text class="ascii">${ascii}</text></g>
+<g clip-path="url(#portrait-clip)" mask="url(#portrait-reveal)"><text font-family="'Courier New', Consolas, monospace" font-size="${layout.portrait.fontSize}" letter-spacing="-0.15" fill="url(#ascii-signal)">${ascii}</text></g>
 ${system.rows}
 <rect x="${layout.system.x + 2}" y="${cursorY}" width="9" height="${layout.system.fontSize + 2}" fill="${colors.cyan}" opacity="0"><animate attributeName="opacity" values="0;0;1;0;1;0;1;0" keyTimes="0;0.03;0.06;0.32;0.5;0.68;0.84;1" dur="1.4s" begin="3.3s" repeatCount="indefinite"/></rect>
-<text x="${layout.width / 2}" y="${layout.footerY}" text-anchor="middle" class="mono" font-size="10" letter-spacing="1.5" fill="${colors.muted}">${escapeXml(footerLabel)}</text>
+<text x="${layout.width / 2}" y="${layout.footerY}" text-anchor="middle" font-family="'Courier New', Consolas, monospace" font-size="10" letter-spacing="1.5" fill="${colors.muted}">${escapeXml(footerLabel)}</text>
 <rect x="0" y="-70" width="${layout.width}" height="70" fill="url(#scan)" opacity="0.72" style="mix-blend-mode:${colors.scanBlend}"><animateTransform attributeName="transform" type="translate" from="0 -70" to="0 ${layout.height + 70}" dur="4.5s" repeatCount="indefinite"/></rect>
 <rect x="3" y="3" width="${layout.width - 6}" height="${layout.height - 6}" rx="${layout.outerRadius - 2}" fill="none" stroke="url(#border)" stroke-width="2" opacity="0.76"><animate attributeName="opacity" values="0.5;0.94;0.5" dur="3.4s" repeatCount="indefinite"/></rect>
 </svg>`;
